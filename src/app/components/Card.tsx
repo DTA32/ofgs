@@ -2,22 +2,30 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Game from "@/interfaces/Game";
 
 const imageLoader = ({ src }: { src: string }) => {
-  return process.env.NEXT_PUBLIC_API_URL + `images/get/${src}`;
+  return process.env.NEXT_PUBLIC_API_URL + `/images/get/${src}`;
 };
 
-export default function card({ data }: any) {
+interface CardProps {
+  game: Game;
+  width?: number;
+  height?: number;
+}
+
+export default function card({ game, width = 240, height = 160 }: CardProps) {
   return (
-    <Link href={`/games/${data.nameID}`}>
+    <Link href={`/games/${game.nameID}`}>
       <div className="relative w-full h-full">
         <Image
           loader={imageLoader}
-          src={data.nameID}
+          src={game.nameID}
           className="rounded-lg"
-          alt={data.nameID}
-          width={240}
-          height={160}
+          alt={game.nameID}
+          width={width}
+          height={height}
+          style={{ width: width, height: height, objectFit: "cover" }}
         />
         <div
           className="absolute bottom-0 h-full rounded-lg"
@@ -28,7 +36,7 @@ export default function card({ data }: any) {
           }}
         ></div>
         <p className="absolute text-white bottom-2 left-2.5 font-semibold tracking-wider">
-          {data.title}
+          {game.title}
         </p>
       </div>
     </Link>

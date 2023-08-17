@@ -3,18 +3,16 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer
-      style={{ backgroundColor: "#22333B" }}
-      className="grid grid-cols-1 md:grid-cols-3 gap-y-8 md:gap-y-0 px-16 py-3 text-white"
+      style={{ backgroundColor: "#22333B", bottom: 0 }}
+      className="grid grid-cols-1 md:grid-cols-3 gap-y-8 md:gap-y-0 px-16 py-3 text-white md:justify-items-center"
     >
       <div>
-        <div className="">
-          <Image src="/logo.png" width={128} height={128} alt="logo" />
-          <small className="ps-2">Created by DTA32</small>
-          {/*wkwkwk males nge-centerin */}
-        </div>
+        <Image src="/logo.png" width={128} height={128} alt="logo" />
+        <small className="ps-2">Created by DTA32</small>
+        {/*wkwkwk males nge-centerin */}
       </div>
       <div>
-        <h3 className="text-2xl">DTA32s Old Flash Game Sites</h3>
+        <h3 className="text-2xl">DTA32&apos;s Flash Game Sites</h3>
         <p className="pt-2.5">Longer subtitle</p>
       </div>
       <div>
