@@ -10,11 +10,12 @@ const imageLoader = ({ src }: { src: string }) => {
 
 interface CardProps {
   game: Game;
-  width?: number;
-  height?: number;
+  isMini?: boolean;
 }
 
-export default function card({ game, width = 240, height = 160 }: CardProps) {
+export default function card({ game, isMini = false }: CardProps) {
+  const width = isMini ? 150 : 240;
+  const height = isMini ? 100 : 160;
   return (
     <Link href={`/games/${game.nameID}`}>
       <div className="relative w-full h-full">
@@ -32,10 +33,14 @@ export default function card({ game, width = 240, height = 160 }: CardProps) {
           style={{
             background:
               "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(255, 255, 255, 0.00) 0%, #000 90%)",
-            width: "240px",
+            width: width,
           }}
         ></div>
-        <p className="absolute text-white bottom-2 left-2.5 font-semibold tracking-wider">
+        <p
+          className={`absolute text-white bottom-2 left-2.5 font-semibold tracking-wider ${
+            isMini ? "text-sm" : "text-base"
+          }`}
+        >
           {game.title}
         </p>
       </div>

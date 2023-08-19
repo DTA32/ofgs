@@ -1,24 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import Card from "@/components/Card";
-import Game from "@/interfaces/Game";
+import GameList from "@/components/GameList";
 
 export default function Home() {
-  const [games, setGames] = useState<Game[]>([]);
-  const getGames = async () => {
-    try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/data/get");
-      const data = await res.json();
-      setGames(data);
-    } catch (err) {
-      console.error(
-        "Fetching data from server error, perhaps you forgot to start the server?"
-      );
-    }
-  };
-  useEffect(() => {
-    getGames();
-  }, []);
   return (
     <main>
       <div id="title" className="py-3">
@@ -29,12 +12,8 @@ export default function Home() {
           Home for all of my favorite flash games :)
         </h2>
       </div>
-      <div className="md:mx-12 my-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-y-12 justify-items-center">
-          {games.map((game) => (
-            <Card key={game.nameID} game={game} />
-          ))}
-        </div>
+      <div className="flex justify-center my-4">
+        <GameList />
       </div>
     </main>
   );
