@@ -1,6 +1,7 @@
 "use client";
 import useSWR from "swr";
 import RandomGameList from "@/app/components/RandomGameList";
+import GamePlayer from "@/app/components/GamePlayer";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -33,7 +34,10 @@ export default function Page({ params }: { params: { nameID: string } }) {
 
   return (
     <main>
-      <div className="grid grid-cols-1 md:grid-cols-4 my-12 px-8 md:px-24">
+      <div className="my-6">
+        <GamePlayer nameID={data.nameID} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 mb-12 px-8 md:px-24">
         <div className="col-span-3">
           <h1 className="text-3xl mb-1.5">{data.title}</h1>
           <h4 className="text-lg mb-8">{data.category}</h4>
