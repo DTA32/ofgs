@@ -2,6 +2,8 @@
 
 > Description under construction
 
+This web using ruffle as Flash Player, and considered to be replaced in the future because it's buggy on some games
+
 [API Repo](https://github.com/DTA32/ofgs-api)
 
 ---

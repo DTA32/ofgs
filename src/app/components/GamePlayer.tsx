@@ -1,13 +1,21 @@
 import { useEffect } from "react";
 
-const useRuffleScript = (url: string) => {
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "awayfl-player": any;
+    }
+  }
+}
+
+const useScript = (url: string) => {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = url;
     script.async = true;
-    document.body.appendChild(script);
+    document.head.appendChild(script);
     return () => {
-      document.body.removeChild(script);
+      document.head.removeChild(script);
     };
   }, [url]);
 };
@@ -16,10 +24,11 @@ export default function GamePlayer({ nameID }: { nameID: string }) {
   const src = (nameID: string) => {
     return `${process.env.NEXT_PUBLIC_API_URL}/games/get/${nameID}.swf`;
   };
-  useRuffleScript("/ruffle/ruffle.js");
+  useScript("/ruffle/ruffle.js");
   return (
     <div className="flex justify-center align-center w-full h-full">
       <embed src={src(nameID)} width={720} height={480} />
+      {/* <awayfl-player runtimebaseurl="/awayfl" src={src(nameID)} /> */}
     </div>
   );
 }
