@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Game from "@/interfaces/Game";
+import { usePathname } from "next/navigation";
 
 const imageLoader = ({ src }: { src: string }) => {
   return process.env.NEXT_PUBLIC_API_URL + `/images/get/${src}`;
@@ -13,11 +14,16 @@ interface CardProps {
   isMini?: boolean;
 }
 
-export default function card({ game, isMini = false }: CardProps) {
+export default function Card({ game, isMini = false }: CardProps) {
   const width = isMini ? 150 : 240;
   const height = isMini ? 100 : 160;
+  const pathname = usePathname().split("/")[1];
+  const href = () => {
+    if (pathname === "admin") return `/admin/games/${game.nameID}`;
+    else return `/games/${game.nameID}`;
+  };
   return (
-    <Link href={`/games/${game.nameID}`}>
+    <Link href={href()}>
       <div className="relative w-full h-full">
         <Image
           loader={imageLoader}
