@@ -1,10 +1,14 @@
 # DTA32's Flash Game Site
 
-> Description under construction
+## About
 
-This web using ruffle as Flash Player, and considered to be replaced in the future because it's buggy on some games
+DFGS is a site for all of my favorite flash games, this project use React (using NextJS framework) as Frontend, Ruffle as Flash Player emulator*, and Express as API**
 
-[API Repo](https://github.com/DTA32/ofgs-api)
+*considered to be replaced in the future because it's buggy on some games
+
+**[API Repo](https://github.com/DTA32/ofgs-api)
+
+*iya tau kok nama projectnya jelek, bodo amat lah yang penting jalan*
 
 ---
 
