@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   handleForm,
@@ -36,6 +36,20 @@ export default function Page({ params }: { params: { nameID: string } }) {
         </h3>
       </div>
     );
+  const handleSubmitInline = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    try {
+      const res = await handleForm(formData);
+      setStatus(res);
+      router.push("/admin/home");
+    } catch (error: any) {
+      setStatus("Client Error");
+      console.log(error);
+    }
+  };
 
   return (
     <main>
@@ -50,18 +64,7 @@ export default function Page({ params }: { params: { nameID: string } }) {
             </button>
             <h1 className="text-2xl text-center">Edit {params.nameID}</h1>
           </div>
-          <form
-            action={async (data: FormData) => {
-              try {
-                const res = await handleForm(data);
-                setStatus(res);
-                router.push("/admin/home");
-              } catch (error: any) {
-                setStatus("Client Error");
-                console.log(error);
-              }
-            }}
-          >
+          <form onSubmit={handleSubmitInline}>
             <div className="grid grid-cols-3 mt-16 gap-x-16">
               <div>
                 <div>
@@ -141,6 +144,7 @@ export default function Page({ params }: { params: { nameID: string } }) {
                       console.log(error);
                     }
                   }}
+                  type="button"
                 >
                   Delete Game
                 </button>
