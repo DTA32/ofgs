@@ -27,7 +27,7 @@ export default function GamePlayer({ nameID }: { nameID: string }) {
   useScript("/ruffle/ruffle.js");
   return (
     <div className="flex justify-center align-center w-full h-full">
-      <embed src={src(nameID)} width={720} height={480} />
+      <embed src={src(nameID)} />
       {/* <awayfl-player runtimebaseurl="/awayfl" src={src(nameID)} /> */}
     </div>
   );

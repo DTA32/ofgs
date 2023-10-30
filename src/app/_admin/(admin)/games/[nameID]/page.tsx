@@ -5,7 +5,7 @@ import Image from "next/image";
 import {
   handleForm,
   handleDelete,
-} from "@/app/admin/(admin)/games/[nameID]/handleForm";
+} from "@/app/_admin/(admin)/games/[nameID]/handleForm";
 import { useState } from "react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());

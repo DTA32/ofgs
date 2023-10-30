@@ -27,7 +27,7 @@ export default function GameList() {
 
   return (
     <div>
-      <div className={"inline-grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8"}>
+      <div className={"flex flex-wrap gap-6"}>
         {data.map((game: Game) => (
           <Card key={game.nameID} game={game} isMini={true} />
         ))}

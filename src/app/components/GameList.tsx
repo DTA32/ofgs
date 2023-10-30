@@ -10,7 +10,7 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/get";
 export default function GameList() {
   const getKey = (index: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null;
-    return `${apiURL}?page=${index}&limit=16`;
+    return `${apiURL}?page=${index}&limit=8`;
   };
   const { data, error, isLoading, isValidating, size, setSize } =
     useSWRInfinite(getKey, fetcher);
@@ -44,7 +44,7 @@ export default function GameList() {
         {isValidating && <p>Loading...</p>}
         {!isValidating && data[size - 1].length !== 0 && (
           <button
-            className="py-2 px-16 rounded-lg bg-amber-600"
+            className="py-2 px-16 rounded-lg bg-amber-600 text-zinc-100"
             onClick={() => {
               setSize(size + 1);
             }}

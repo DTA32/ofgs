@@ -1,5 +1,5 @@
 "use client";
-import { handleSubmit } from "@/app/admin/handleSubmit";
+import { handleSubmit } from "@/app/_admin/handleSubmit";
 
 export default function Admin() {
   return (
