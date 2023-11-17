@@ -23,33 +23,31 @@ export default function Card({ game, isMini = false }: CardProps) {
     else return `/games/${game.nameID}`;
   };
   return (
-    <Link href={href()}>
-      <div className="relative w-full h-full">
-        <Image
-          loader={imageLoader}
-          src={game.nameID}
-          className="rounded-lg"
-          alt={game.nameID}
-          width={width}
-          height={height}
-          style={{ width: width, height: height, objectFit: "cover" }}
-        />
-        <div
-          className="absolute bottom-0 h-full rounded-lg"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(255, 255, 255, 0.00) 0%, #000 90%)",
-            width: width,
-          }}
-        ></div>
-        <p
-          className={`absolute text-white bottom-2 left-2.5 font-semibold tracking-wider ${
-            isMini ? "text-sm" : "text-base"
-          }`}
-        >
-          {game.title}
-        </p>
-      </div>
+    <Link href={href()} className="relative w-full h-full">
+      <Image
+        loader={imageLoader}
+        src={game.nameID}
+        className="rounded-lg"
+        alt={game.nameID}
+        width={width}
+        height={height}
+        style={{ width: width, height: height, objectFit: "cover" }}
+      />
+      <div
+        className="absolute inset-0 rounded-lg"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(255, 255, 255, 0.00) 0%, #000 90%)",
+          width: width,
+        }}
+      ></div>
+      <p
+        className={`absolute text-white bottom-2 left-2.5 font-semibold tracking-wider ${
+          isMini ? "text-sm" : "text-base"
+        }`}
+      >
+        {game.title}
+      </p>
     </Link>
   );
 }

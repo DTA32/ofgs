@@ -52,7 +52,7 @@ export default function GameList() {
             Load more
           </button>
         )}
-        {!isValidating && isReachingEnd && size > 1 && <p>No more games</p>}
+        {!isValidating && data[size - 1].length == 0 && <p>No more games</p>}
       </div>
     </div>
   );

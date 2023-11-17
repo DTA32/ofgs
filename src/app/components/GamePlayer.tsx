@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import Game from "../interfaces/Game";
+import Script from "next/script";
 
 declare global {
   namespace JSX {
@@ -8,27 +9,34 @@ declare global {
   }
 }
 
-const useScript = (url: string) => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = url;
-    script.async = true;
-    document.head.appendChild(script);
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [url]);
-};
-
-export default function GamePlayer({ nameID }: { nameID: string }) {
+export default function GamePlayer({ game }: { game: Game }) {
   const src = (nameID: string) => {
     return `${process.env.NEXT_PUBLIC_API_URL}/games/get/${nameID}.swf`;
   };
-  useScript("/ruffle/ruffle.js");
+  var emulatorScript: string = "";
+  var embedJSX: JSX.Element = <></>;
+  if (game.type === 1) {
+    emulatorScript = "/awayfl/embed.js";
+    embedJSX = (
+      <awayfl-player runtimebaseurl="/awayfl" src={src(game.nameID)} />
+    );
+  } else if (game.type === 2) {
+    emulatorScript = "https://unpkg.com/@ruffle-rs/ruffle";
+    embedJSX = (
+      <embed
+        src={src(game.nameID)}
+        width={game.dimension.width}
+        height={game.dimension.height}
+      />
+    );
+  }
+
   return (
-    <div className="flex justify-center align-center w-full h-full">
-      <embed src={src(nameID)} />
-      {/* <awayfl-player runtimebaseurl="/awayfl" src={src(nameID)} /> */}
-    </div>
+    <>
+      <Script src={emulatorScript} />
+      <div className="flex justify-center align-center w-full h-full">
+        {embedJSX}
+      </div>
+    </>
   );
 }

@@ -27,7 +27,8 @@ export default function GameList() {
 
   return (
     <div>
-      <div className={"flex flex-wrap gap-6"}>
+      <p className="text-lg text-center mb-4">Random suggestion</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {data.map((game: Game) => (
           <Card key={game.nameID} game={game} isMini={true} />
         ))}

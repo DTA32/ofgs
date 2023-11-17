@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+};
+
 export default function about() {
   return (
-    <main className="flex-1 flex flex-col space-y-12 py-6">
+    <main className="flex-1 flex flex-col space-y-8 pt-6 mb-32">
       <div id="title" className="pb-6 px-4 md:px-0">
         <h1 className="text-center text-4xl mb-1.5">
           DTA32&apos;s Flash Game Site
@@ -31,8 +37,8 @@ export default function about() {
                 </li>
                 <li>
                   If a game isn&apos;t loaded after ~30 seconds, please just go
-                  back, as it may consume your memory excessively (hehe sorry
-                  haven&apos;t fixed it yet)
+                  back, it&apos;s a bug and may consume your memory excessively
+                  (hehe sorry haven&apos;t fixed it yet)
                 </li>
               </ul>
             </div>
