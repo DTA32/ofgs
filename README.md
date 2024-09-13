@@ -10,6 +10,12 @@ DFGS is a site for all of my favorite flash games, this project use React (using
 
 *iya tau kok nama projectnya jelek, bodo amat lah yang penting jalan*
 
+### Docker setup
+
+To run frontend and backend individually can just `docker build -t (fe/be) .` and `docker run -d -p ext:3000 (fe/be)` each of them
+
+Also can be run simultaneously using `docker compose up -d`, but first do `docker build -t dfgs-api .` on backend
+
 ---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
