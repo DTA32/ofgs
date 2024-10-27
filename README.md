@@ -12,9 +12,15 @@ DFGS is a site for all of my favorite flash games, this project use React (using
 
 ### Docker setup
 
-To run frontend and backend individually can just `docker build -t (fe/be) .` and `docker run -d -p ext:3000 (fe/be)` each of them
+For quick preview, image is available on docker hub and can be pulled by `docker pull dta32/ofgs:latest` then step 2, but it's based on master branch, so if there's code changes or want to change API url to local can do these
 
-Also can be run simultaneously using `docker compose up -d`, but first do `docker build -t dfgs-api .` on backend
+1. `docker build --build-arg NEXT_PUBLIC_API_URL="{localIp:port}" -t dta32/ofgs .`
+1. `docker run -d -p {externalPort}:3000 dta32/ofgs:latest`
+
+For more simple deploy on each side can also use docker compose, it will autorun frontend and backend, but please build/pull backend image first and edit env and args for each image
+
+1. `docker compose build`
+1. `docker compose up -d`
 
 ---
 
