@@ -8,7 +8,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/getRandom";
 
 export default function GameList() {
-  const { data, error, isLoading, isValidating } = useSWR(apiURL, fetcher, {
+  const {data, error, isLoading, isValidating} = useSWR(apiURL, fetcher, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateIfStale: false,
@@ -27,10 +27,10 @@ export default function GameList() {
 
   return (
     <div>
-      <p className="text-lg text-center mb-4">Random suggestion</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <p className="text-lg mb-4">Random suggestions</p>
+      <div className="flex flex-wrap gap-6">
         {data.map((game: Game) => (
-          <Card key={game.nameID} game={game} isMini={true} />
+          <Card key={game.nameID} game={game} isMini={true}/>
         ))}
       </div>
     </div>

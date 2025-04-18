@@ -9,7 +9,7 @@ export default function Footer() {
           Created by DTA32
         </small>
       </div>
-      <div className="flex items-center">
+      <div className="flex flex-col justify-center items-center">
         <p className="text-lg">
           Home for all of my favorite flash games
         </p>

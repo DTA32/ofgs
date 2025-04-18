@@ -53,7 +53,7 @@ export default function GameList() {
                 )}
               </div>
             </div>
-            <div className="flex justify-center align-center text-center mb-6 text-xl">
+            <div className="flex justify-center align-center text-center text-xl">
                 {isValidating && <p>Loading...</p>}
                 {!isValidating && data[size - 1].length !== 0 && (
                     <button
