@@ -109,7 +109,7 @@ export default function Page({ params }: { params: { nameID: string } }) {
               </div>
               <div>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/images/get/${data.nameID}`}
+                  src={`${process.env.NEXT_PUBLIC_STATIC_URL}/images/${data.nameID}.${data.imageType}`}
                   alt="image"
                   width={240}
                   height={240}

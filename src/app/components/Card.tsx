@@ -6,7 +6,7 @@ import Game from "@/interfaces/Game";
 import { usePathname } from "next/navigation";
 
 const imageLoader = ({ src }: { src: string }) => {
-  return process.env.NEXT_PUBLIC_API_URL + `/images/get/${src}`;
+  return process.env.NEXT_PUBLIC_STATIC_URL + `/images/${src}`;
 };
 
 interface CardProps {
@@ -26,7 +26,7 @@ export default function Card({ game, isMini = false }: CardProps) {
     <Link href={href()} className="relative w-full h-full">
       <Image
         loader={imageLoader}
-        src={game.nameID}
+        src={game.nameID + "." + game.imageType}
         className="rounded-lg"
         alt={game.nameID}
         width={width}
