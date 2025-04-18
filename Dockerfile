@@ -29,6 +29,9 @@ COPY . .
 
 ARG NEXT_PUBLIC_API_URL="https://dfgs.dta32.my.id/api"
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+# stupid ass nextjs
+ARG NEXT_PUBLIC_STATIC_URL='https://dfgs-static.dta32.my.id'
+ENV NEXT_PUBLIC_STATIC_URL=${NEXT_PUBLIC_STATIC_URL}
 
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
@@ -64,6 +67,8 @@ USER nextjs
 ENV PORT=3000
 ARG NEXT_PUBLIC_API_URL="https://dfgs.dta32.my.id/api"
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ARG NEXT_PUBLIC_STATIC_URL='https://dfgs-static.dta32.my.id'
+ENV NEXT_PUBLIC_STATIC_URL=${NEXT_PUBLIC_STATIC_URL}
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
