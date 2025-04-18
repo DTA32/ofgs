@@ -23,7 +23,7 @@ export default function Card({ game, isMini = false }: CardProps) {
     else return `/games/${game.nameID}`;
   };
   return (
-    <Link href={href()} className={`relative`}>
+    <Link href={href()} className={`relative w-fit`}>
       <Image
         loader={imageLoader}
         src={game.nameID + "." + game.imageType}

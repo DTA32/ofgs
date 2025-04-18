@@ -47,7 +47,7 @@ export default function GameList() {
                   </button>
                 </div>
               </div>
-              <div className="w-full inline-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-28">
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 justify-items-center">
                 {data.map((page: any) =>
                   page.map((game: Game) => <Card key={game.nameID} game={game} isMini={false} />)
                 )}
