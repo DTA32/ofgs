@@ -1,17 +1,16 @@
 "use client";
 import GameList from "@/components/GameList";
+import HomeHeader from "@/components/HomeHeader";
 
 export default function Home() {
   return (
-    <main className="flex-1">
-      <div id="title" className="py-6 px-4 md:px-0">
-        <h1 className="text-center text-4xl mb-1.5">
-          DTA32&apos;s Flash Game Site
-        </h1>
+      <div className="flex flex-col max-w-5xl px-8 mx-auto w-full justify-center">
+        <HomeHeader/>
+        <main className="flex-1">
+          <div className="flex mt-1 w-full">
+            <GameList />
+          </div>
+        </main>
       </div>
-      <div className="flex justify-center my-4">
-        <GameList />
-      </div>
-    </main>
   );
 }
