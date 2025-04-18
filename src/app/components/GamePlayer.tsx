@@ -11,7 +11,7 @@ declare global {
 
 export default function GamePlayer({ game }: { game: Game }) {
   const src = (nameID: string) => {
-    return `${process.env.NEXT_PUBLIC_API_URL}/games/get/${nameID}.swf`;
+    return `${process.env.NEXT_PUBLIC_STATIC_URL}/games/${nameID}.swf`;
   };
   var emulatorScript: string = "";
   var embedJSX: JSX.Element = <></>;
