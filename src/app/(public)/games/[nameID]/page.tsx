@@ -69,9 +69,9 @@ export default function Page({params}: { params: { nameID: string } }) {
                   </div>
                   <Heart width={32} height={32} svgClass={"text-brown-dark"} isClicked={false}/>
                 </div>
-                <div className="text-lg flex gap-2">
+                <div className="flex gap-2">
                   {loadedData.category.map((cat) => (
-                    <span className="py-1 px-4 bg-brown-dark text-cream rounded-md" key={cat}>
+                    <span className="py-1 px-4 bg-brown-darker text-cream rounded-md" key={cat}>
                               {cat}
                           </span>
                   ))}
