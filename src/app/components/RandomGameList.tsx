@@ -1,20 +1,33 @@
 "use client";
-import useSWR from "swr";
 import Card from "@/components/Card";
 import Game from "@/interfaces/Game";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import {useEffect, useState} from "react";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/getRandom";
 
 export default function GameList() {
-  const {data, error, isLoading, isValidating} = useSWR(apiURL, fetcher, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    revalidateIfStale: false,
-    revalidateOnMount: true,
-  });
-  if (isLoading || isValidating)
+  const [data, setData] = useState<Game[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(apiURL);
+        if (!res.ok) {
+          throw new Error(`Error from API: ${res.status}`);
+        }
+        const json = await res.json();
+        setData(json as Game[]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+  if (isLoading)
     return <div className="md:text-center pt-4 text-lg">Loading...</div>;
   if (error || !data)
     return (

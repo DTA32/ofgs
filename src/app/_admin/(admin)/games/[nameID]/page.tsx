@@ -1,28 +1,39 @@
 "use client";
-import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   handleForm,
   handleDelete,
 } from "@/app/_admin/(admin)/games/[nameID]/handleForm";
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import Game from "@/interfaces/Game";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/get/"
 
 export default function Page({ params }: { params: { nameID: string } }) {
   const router = useRouter();
   const [status, setStatus] = useState<string>("");
-  const { data, error, isLoading } = useSWR(
-    process.env.NEXT_PUBLIC_API_URL + "/data/get/" + params.nameID,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      revalidateIfStale: false,
-      revalidateOnMount: true,
-    }
-  );
+  const [data, setData] = useState<Game | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(apiURL + params.nameID);
+        if (!res.ok){
+          throw new Error(`Error from API: ${res.status}`);
+        }
+        const json = await res.json();
+        setData(json as Game);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [params.nameID]);
   if (isLoading)
     return (
       <div className="m-24 text-center text-white text-4xl">Loading...</div>
@@ -33,6 +44,15 @@ export default function Page({ params }: { params: { nameID: string } }) {
         <h1 className="text-3xl">Error</h1>
         <h3 className="text-xl pt-8">
           Error while fetching data, please try again later.
+        </h3>
+      </div>
+    );
+  if (!data)
+    return (
+      <div className="m-24 text-center text-white">
+        <h1 className="text-3xl">Error</h1>
+        <h3 className="text-xl pt-8">
+          Data not found, please try again later.
         </h3>
       </div>
     );
