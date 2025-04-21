@@ -15,7 +15,7 @@ export default function Footer() {
         </p>
       </div>
       <div className="flex items-center">
-        <div className="grid grid-cols-2 gap-1">
+        <div className="flex justify-between gap-4 w-full md:w-auto md:grid md:grid-cols-2 md:gap-1">
           <Link href="/about">About</Link>
           <Link href="/about">Privacy Policy</Link>
           <Link href="/about">Disclaimer</Link>

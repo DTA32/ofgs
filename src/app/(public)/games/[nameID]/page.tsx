@@ -79,7 +79,7 @@ export default function Page({params}: { params: { nameID: string } }) {
       <div className="flex flex-col gap-6 w-full mb-12">
         <GamePlayer game={loadedData}/>
         <div className="flex flex-col md:flex-row gap-12">
-          <div className="flex flex-col gap-12 w-full">
+          <section className="flex flex-col gap-12 w-full">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <div className="flex w-full justify-between items-center gap-4">
@@ -118,10 +118,10 @@ export default function Page({params}: { params: { nameID: string } }) {
               <h3 className="text-xl">{loadedData.description}</h3>
             </div>
             <p>Disclaimer:</p>
-          </div>
-          <div className="w-full max-w-[324px]">
+          </section>
+          <aside className="w-full max-w-[324px]">
             <RandomGameList/>
-          </div>
+          </aside>
         </div>
       </div>
     </main>
