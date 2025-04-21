@@ -17,11 +17,15 @@ export default function Page({params}: { params: { nameID: string } }) {
     const fetchData = async () => {
       try {
         const res = await fetch(apiURL + params.nameID);
-        if (!res.ok){
+        if (!res.ok) {
           throw new Error(`Error from API: ${res.status}`);
         }
         const json = await res.json();
-        setData(json as Game);
+        const processedData = json as Game;
+        setData(processedData);
+        if (processedData) {
+          document.title = `${processedData.title} - DFGS`;
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(true);
@@ -30,18 +34,21 @@ export default function Page({params}: { params: { nameID: string } }) {
       }
     };
     fetchData();
+    return () => {
+      document.title = "DFGS";
+    }
   }, [params.nameID]);
   const router = useRouter();
 
-  if (isLoading) 
+  if (isLoading)
     return (
-    <div className="max-w-5xl px-8 mx-auto w-full text-center flex-1 flex flex-col place-content-center">
-      <p className="text-4xl">Loading...</p>
-    </div>
-  );
+      <div className="container px-8 mx-auto w-full text-center flex-1 flex flex-col place-content-center">
+        <p className="text-4xl">Loading...</p>
+      </div>
+    );
   if (error)
     return (
-      <div className="max-w-5xl px-8 mx-auto w-full text-center flex-1 flex flex-col place-content-center gap-6">
+      <div className="container px-8 mx-auto w-full text-center flex-1 flex flex-col place-content-center gap-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl">Error</h1>
           <h3 className="text-xl">
@@ -52,7 +59,8 @@ export default function Page({params}: { params: { nameID: string } }) {
         <div className="flex justify-center items-center gap-4">
           <button onClick={() => {
             router.refresh()
-          }}>Refresh</button>
+          }} className="underline">Refresh
+          </button>
           <p>or</p>
           <Link className="px-4 py-1 rounded-lg bg-orange text-cream" href="/home">Return to Home</Link>
         </div>
@@ -60,7 +68,7 @@ export default function Page({params}: { params: { nameID: string } }) {
     );
   if (!data)
     return (
-      <div className="max-w-5xl px-8 mx-auto w-full text-center flex-1 flex flex-col place-content-center gap-6">
+      <div className="container px-8 mx-auto w-full text-center flex-1 flex flex-col place-content-center gap-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl">Game not found</h1>
           <h3 className="text-xl">
@@ -74,7 +82,7 @@ export default function Page({params}: { params: { nameID: string } }) {
     );
   const loadedData = data;
   return (
-    <main className="flex flex-col max-w-5xl px-8 mx-auto w-full justify-center gap-2 text-brown-darker">
+    <main className="flex flex-col container px-8 mx-auto w-full justify-center gap-2 text-brown-darker">
       <Link href="/home" className="text-sm">← Return to home</Link>
       <div className="flex flex-col gap-6 w-full mb-12">
         <GamePlayer game={loadedData}/>

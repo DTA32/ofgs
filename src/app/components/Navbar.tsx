@@ -10,7 +10,7 @@ export default function Navbar() {
   const isHome = pathname.includes("/home");
   return (
     <nav
-      className={`flex justify-between text-brown-darker gap-4 ${isHome ? "max-w-5xl px-14 my-6 mx-auto w-full" : "mx-8 my-4"}`}
+      className={`flex justify-between text-brown-darker gap-4 ${isHome ? "container px-14 my-6 mx-auto w-full" : "mx-8 my-4"}`}
     >
       <div className="flex gap-4 items-center">
         <Link href="/home">
