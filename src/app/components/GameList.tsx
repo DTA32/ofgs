@@ -37,12 +37,6 @@ export default function GameList() {
     fetchData(page);
   }, [page])
 
-  if (data.length === 0)
-    return (
-      <div className="w-full flex flex-col place-content-center">
-        <p className="text-center text-4xl">Loading...</p>
-      </div>
-    );
   if (error || (data.length === 0 && isReachingEnd))
     return (
       <div className="w-full flex flex-col text-center place-content-center">
@@ -50,6 +44,13 @@ export default function GameList() {
         <h3 className="text-xl pt-8">
           Error while fetching data, maybe my server is down, hehe. <br/>Please try again later.
         </h3>
+      </div>
+    );
+  
+  if (data.length === 0)
+    return (
+      <div className="w-full flex flex-col place-content-center">
+        <p className="text-center text-4xl">Loading...</p>
       </div>
     );
 
