@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="flex items-center">
         <div className="flex justify-between gap-4 w-full md:w-auto md:grid md:grid-cols-2 md:gap-1">
           <Link href="/about">About</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/about#privacy-policy">Privacy Policy</Link>
           <Link href="/about#disclaimer">Disclaimer</Link>
           <Link href="/about#contact">Contact</Link>
         </div>

@@ -125,7 +125,13 @@ export default function Page({params}: { params: { nameID: string } }) {
               </div>
               <h3 className="text-xl">{loadedData.description}</h3>
             </div>
-            <p>Disclaimer:</p>
+            <p>
+              Disclaimer: I respect the rights of all developers/publishers.
+              If you held right of this game and do not wish for it to be shown here, please reach out to me 
+              via <Link className="underline" href="/about#contact">one of my contact link</Link>, 
+              and i&apos;ll remove it. See full disclaimer&nbsp;
+              <Link className="underline" href="/about#disclaimer">here</Link>
+            </p>
           </section>
           <aside className="w-full max-w-[324px]">
             <RandomGameList/>
