@@ -138,9 +138,18 @@ export default function Page({params}: { params: { nameID: string } }) {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {loadedData.category.map((cat) => (
-                    <span className="py-1 px-4 bg-brown-darker text-cream rounded-md" key={cat}>
-                              {cat}
-                          </span>
+                    <Link 
+                      href={{
+                        pathname: `/home`,
+                        query: {
+                          category: cat,
+                        },
+                      }}
+                      className="py-1 px-4 bg-brown-darker text-cream rounded-md" 
+                      key={cat}
+                    >
+                      {cat}
+                    </Link>
                   ))}
                 </div>
               </div>

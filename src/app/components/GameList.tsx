@@ -7,16 +7,21 @@ import {useEffect, useState} from "react";
 const apiURL = process.env.NEXT_PUBLIC_API_URL + "/games/data/get";
 const pageLimit = 9;
 
-export default function GameList() {
+export default function GameList({searchQuery, category}: { searchQuery: string | null, category: string | null }) {
   const [data, setData] = useState<Game[]>([]);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isReachingEnd, setIsReachingEnd] = useState(false);
-  const fetchData = async (page: number) => {
+  const [internalSearchQuery, setInternalSearchQuery] = useState<string | null>(searchQuery);
+  const [internalCategory, setInternalCategory] = useState<string | null>(category);
+  const fetchData = async (page: number, searchQuery: string | null, category: string | null) => {
     setIsPaginationLoading(true);
     try {
-      const res = await fetch(`${apiURL}?page=${page}&limit=${pageLimit}`);
+      const queryParam = searchQuery ? `&search=${searchQuery}` : "";
+      const categoryParam = category ? `&category=${category}` : "";
+      const res = await fetch(`${apiURL}?page=${page}&limit=${pageLimit}${queryParam}${categoryParam}`);
       if (!res.ok) {
         throw new Error(`Error from API: ${res.status}`);
       }
@@ -30,70 +35,89 @@ export default function GameList() {
       console.error("Error fetching data:", error);
       setError(true);
     } finally {
+      setIsLoading(false);
       setIsPaginationLoading(false);
     }
   }
+  
   useEffect(() => {
-    fetchData(page);
-  }, [page])
+    fetchData(page, internalSearchQuery, internalCategory);
+  }, [page, internalSearchQuery, internalCategory]);
+  
+  const resetList = () => {
+    setData([]);
+    setPage(1);
+    setIsLoading(true);
+    setIsReachingEnd(false);
+  }
+  
+  useEffect(() => {
+    if (searchQuery !== internalSearchQuery) {
+      setInternalSearchQuery(searchQuery);
+      resetList();
+    }
+  }, [searchQuery]);
+  
+  useEffect(() => {
+    if (category !== internalCategory) {
+      setInternalCategory(category);
+      resetList();
+    }
+  }, [category]);
 
   if (error)
     return (
-      <div className="w-full flex flex-col text-center place-content-center">
+      <div className="w-full flex flex-1 flex-col text-center place-content-center px-8">
         <h1 className="text-3xl">Error</h1>
         <h3 className="text-xl pt-8">
           Error while fetching data, maybe my server is down, hehe. <br/>Please try again later.
         </h3>
       </div>
     );
-  
-  if (data.length === 0)
+
+  if (isLoading)
     return (
-      <div className="w-full flex flex-col place-content-center">
+      <div className="w-full flex flex-1 flex-col place-content-center">
         <p className="text-center text-4xl">Loading...</p>
       </div>
     );
 
+  if (data.length === 0) {
+    return (
+      <div className="w-full flex flex-1 flex-col text-center place-content-center px-8">
+        <h1 className="text-3xl">No results</h1>
+        <h3 className="text-xl pt-8">
+          No results found for your search. <br/>Please try again with a different search term.
+        </h3>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col w-full gap-12">
-      <div className="flex flex-col gap-6">
-        <div className="flex justify-center gap-4 w-full">
-          <button type="submit" className="text-lg px-6 py-2 text-cream bg-brown-dark rounded-lg">All</button>
-          <button type="submit"
-                  className="text-lg px-6 py-2 text-brown-darker hidden md:block border border-brown-dark rounded-lg">Racing
-          </button>
-          <button type="submit"
-                  className="text-lg px-6 py-2 text-brown-darker hidden md:block border border-brown-dark rounded-lg">Platformer
-          </button>
-          <div className="flex items-center relative">
-            <select
-              className="text-lg px-4 py-2 text-brown-darker w-36 border border-brown-dark rounded-lg appearance-none bg-cream-light">
-              <option selected={true} disabled={true}>Other</option>
-            </select>
-            <button className="flex items-center absolute right-2.5">
-              <ChevronDown width={32} height={32} svgClass="text-brown-darker"/>
-            </button>
-          </div>
-        </div>
+    <div className="flex flex-col flex-1 w-full gap-4">
+      {searchQuery && (
+        <p className="text-xl text-center">Result for &quot;{searchQuery}&quot;</p>
+      )}
+      <div className="flex flex-col flex-1 w-full gap-12">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 justify-items-center">
           {data.map((game: Game) =>
             <Card key={game.nameID} game={game} isMini={false}/>
           )}
         </div>
-      </div>
-      <div className="flex justify-center align-center text-center text-xl">
-        {isPaginationLoading && <p>Loading...</p>}
-        {(!isReachingEnd && !isPaginationLoading) && (
-          <button
-            className="py-2 px-8 rounded-lg bg-orange text-cream"
-            onClick={() => {
-              setPage((prevPage) => prevPage + 1);
-            }}
-          >
-            Load more
-          </button>
-        )}
-        {isReachingEnd && <p className="text-sm">No more games :(</p>}
+        <div className="flex justify-center align-center text-center text-xl">
+          {isPaginationLoading && <p>Loading...</p>}
+          {(!isReachingEnd && !isPaginationLoading) && (
+            <button
+              className="py-2 px-8 rounded-lg bg-orange text-cream"
+              onClick={() => {
+                setPage((prevPage) => prevPage + 1);
+              }}
+            >
+              Load more
+            </button>
+          )}
+          {isReachingEnd && <p className="text-sm">No more games :(</p>}
+        </div>
       </div>
     </div>
   );

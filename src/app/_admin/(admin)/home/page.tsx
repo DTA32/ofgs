@@ -10,7 +10,7 @@ export default function Home() {
         </h2>
       </div>
       <div className="flex justify-center my-4 text-white">
-        <GameList />
+        <GameList searchQuery={null} category={null}/>
       </div>
     </main>
   );
