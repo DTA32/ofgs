@@ -8,7 +8,7 @@ import {
 import {useEffect, useState} from "react";
 import Game from "@/interfaces/Game";
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/get/"
+const apiURL = process.env.NEXT_PUBLIC_API_URL + "/games/data/get/"
 
 export default function Page({ params }: { params: { nameID: string } }) {
   const router = useRouter();

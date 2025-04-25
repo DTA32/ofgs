@@ -4,14 +4,14 @@ import Game from "@/interfaces/Game";
 import ChevronDown from "@/app/icons/ChevronDown";
 import {useEffect, useState} from "react";
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/get";
+const apiURL = process.env.NEXT_PUBLIC_API_URL + "/games/data/get";
 const pageLimit = 9;
 
 export default function GameList() {
   const [data, setData] = useState<Game[]>([]);
   const [error, setError] = useState(false);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [isReachingEnd, setIsReachingEnd] = useState(false);
   const fetchData = async (page: number) => {
     setIsPaginationLoading(true);
@@ -21,10 +21,10 @@ export default function GameList() {
         throw new Error(`Error from API: ${res.status}`);
       }
       const json = await res.json();
-      if (json.length === 0) {
+      const gameData = json.data;
+      setData((prevData) => [...prevData, ...gameData]);
+      if (json.maxPage === page) {
         setIsReachingEnd(true);
-      } else {
-        setData((prevData) => [...prevData, ...json]);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -37,7 +37,7 @@ export default function GameList() {
     fetchData(page);
   }, [page])
 
-  if (error || (data.length === 0 && isReachingEnd))
+  if (error)
     return (
       <div className="w-full flex flex-col text-center place-content-center">
         <h1 className="text-3xl">Error</h1>
@@ -93,7 +93,7 @@ export default function GameList() {
             Load more
           </button>
         )}
-        {isReachingEnd && <p>No more games</p>}
+        {isReachingEnd && <p className="text-sm">No more games :(</p>}
       </div>
     </div>
   );

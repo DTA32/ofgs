@@ -3,7 +3,7 @@ import Card from "@/components/Card";
 import Game from "@/interfaces/Game";
 import {useEffect, useState} from "react";
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL + "/data/getRandom";
+const apiURL = process.env.NEXT_PUBLIC_API_URL + "/games/data/getRandom";
 
 export default function GameList() {
   const [data, setData] = useState<Game[]>([]);
