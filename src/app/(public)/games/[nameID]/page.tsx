@@ -6,6 +6,8 @@ import RandomGameList from "@/components/RandomGameList";
 import Game from "@/interfaces/Game";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {useLiveQuery} from "dexie-react-hooks";
+import {db} from "@/app/indexeddb/db.model";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL + "/games/data/get/";
 
@@ -13,6 +15,20 @@ export default function Page({params}: { params: { nameID: string } }) {
   const [data, setData] = useState<Game | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const isFavoritedOnDB = useLiveQuery(() => db.favorites.where('gameId').equals(params.nameID).count());
+  const [isFavorite, setIsFavorite] = useState(false);
+  const handleFavoriteClick = async () => {
+    if (isFavorite) {
+      await db.favorites.where('gameId').equals(params.nameID).delete();
+      setIsFavorite(false);
+    } else {
+      await db.favorites.add({
+        gameId: params.nameID,
+        favoritedAt: new Date(),
+      });
+      setIsFavorite(true);
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,6 +54,13 @@ export default function Page({params}: { params: { nameID: string } }) {
       document.title = "DFGS";
     }
   }, [params.nameID]);
+  useEffect(() => {
+    if (isFavoritedOnDB && isFavoritedOnDB > 0) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }, [isFavoritedOnDB]);
   const router = useRouter();
 
   if (isLoading)
@@ -109,7 +132,9 @@ export default function Page({params}: { params: { nameID: string } }) {
                           </span>
                     </div>
                   </div>
-                  <Heart width={32} height={32} svgClass={"text-brown-dark"} isClicked={false}/>
+                  <button onClick={handleFavoriteClick}>
+                    <Heart width={32} height={32} svgClass={"text-brown-dark"} isClicked={isFavorite}/>
+                  </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {loadedData.category.map((cat) => (
@@ -127,8 +152,8 @@ export default function Page({params}: { params: { nameID: string } }) {
             </div>
             <p>
               Disclaimer: I respect the rights of all developers/publishers.
-              If you held right of this game and do not wish for it to be shown here, please reach out to me 
-              via <Link className="underline" href="/about#contact">one of my contact link</Link>, 
+              If you held right of this game and do not wish for it to be shown here, please reach out to me
+              via <Link className="underline" href="/about#contact">one of my contact link</Link>,
               and i&apos;ll remove it. See full disclaimer&nbsp;
               <Link className="underline" href="/about#disclaimer">here</Link>
             </p>
