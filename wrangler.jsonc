@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "dfgs",
+  "compatibility_date": "2025-03-25",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "NEXT_PUBLIC_API_URL": "https://api.dfgs.dta32.my.id",
+        "NEXT_PUBLIC_STATIC_URL": "https://dfgs-static.dta32.my.id"
+      }
+    }
+  },
+  "routes": [
+    {
+      "pattern": "dfgs.dta32.my.id",
+      "custom_domain": true
+    }
+  ]
+}
